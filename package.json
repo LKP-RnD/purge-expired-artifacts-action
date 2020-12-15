@@ -1,0 +1,61 @@
+{
+  "name": "purge-expired-run-artifacts-action",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "jest --config jest.unit.config.js",
+    "lint": "eslint 'src/**.js' --fix",
+    "precommit": "npm run build && git add dist/",
+    "build": "npm build ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pablojomere/purge-expired-run-artifacts-action"
+  },
+  "keywords": [],
+  "author": "Pablo Jomer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pablojomere/purge-expired-run-artifacts-action/issues"
+  },
+  "homepage": "https://github.com/pablojomere/purge-expired-run-artifacts-action#readme",
+  "dependencies": {
+    "@actions/core": "^1.2.6",
+    "@actions/github": "^4.0.0"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.25.1",
+    "@types/jest": "^26.0.19",
+    "@types/mocha": "^8.2.0",
+    "eslint": "^7.15.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-prettier": "^7.0.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.3.0",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "husky": "^4.3.6",
+    "jest": "^26.6.3",
+    "logform": "^2.2.0",
+    "mocha": "^8.2.1",
+    "prettier": "^2.2.1",
+    "ts-jest": "26.1.2",
+    "ts-loader": "^5.3.1",
+    "ts-node": "^8.0.3",
+    "tslint": "^5.11.0",
+    "tslint-config-airbnb": "^5.11.1",
+    "tslint-config-prettier": "^1.17.0",
+    "tslint-junit-formatter": "^5.1.0",
+    "typedi": "^0.8.0",
+    "typescript": "^3.3.3333",
+    "winston": "^3.3.3",
+    "winston-transport": "^4.4.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run precommit"
+    }
+  }
+}

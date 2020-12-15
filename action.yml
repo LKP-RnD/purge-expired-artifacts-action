@@ -1,0 +1,12 @@
+name: 'purge-expired-artifacts'
+description: 'github action to remove expired artifacts from previously run actions'
+inputs:
+  parent_repo:
+    description: 'The github repo to purge of expired artifacts.'
+    required: true
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
+branding:
+  icon: 'trash-2'
+  color: 'green'

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="28f1069a-8035-4b60-847e-52324da886c1" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ProjectId" id="1lddgXznEl3DGLpA5WPnOdtWKvT" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="nodejs.jest.jest_package" value="$PROJECT_DIR$/node_modules/jest" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="prettierjs.PrettierConfiguration.Package" value="$PROJECT_DIR$/node_modules/prettier" />
+    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/src" />
+      <recent name="$PROJECT_DIR$/src/logger" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="jest.unit.config.js" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <config-file value="$PROJECT_DIR$/jest.unit.config.js" />
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="ALL" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Jest.jest.unit.config.js" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="28f1069a-8035-4b60-847e-52324da886c1" name="Default Changelist" comment="" />
+      <created>1607931013406</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1607931013406</updated>
+      <workItem from="1607931014441" duration="9144000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="184" y="95" width="1071" height="724" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1608015840268">
+      <screen x="0" y="23" width="1440" height="820" />
+    </state>
+    <state x="184" y="95" width="1071" height="724" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.820@0.23.1440.820" timestamp="1608015840268" />
+    <state width="1398" height="212" key="GridCell.Tab.0.bottom" timestamp="1608015841994">
+      <screen x="0" y="23" width="1440" height="820" />
+    </state>
+    <state width="1398" height="212" key="GridCell.Tab.0.bottom/0.23.1440.820@0.23.1440.820" timestamp="1608015841994" />
+    <state width="1398" height="212" key="GridCell.Tab.0.center" timestamp="1608015841994">
+      <screen x="0" y="23" width="1440" height="820" />
+    </state>
+    <state width="1398" height="212" key="GridCell.Tab.0.center/0.23.1440.820@0.23.1440.820" timestamp="1608015841994" />
+    <state width="1398" height="212" key="GridCell.Tab.0.left" timestamp="1608015841993">
+      <screen x="0" y="23" width="1440" height="820" />
+    </state>
+    <state width="1398" height="212" key="GridCell.Tab.0.left/0.23.1440.820@0.23.1440.820" timestamp="1608015841993" />
+    <state width="1398" height="212" key="GridCell.Tab.0.right" timestamp="1608015841994">
+      <screen x="0" y="23" width="1440" height="820" />
+    </state>
+    <state width="1398" height="212" key="GridCell.Tab.0.right/0.23.1440.820@0.23.1440.820" timestamp="1608015841994" />
+    <state x="100" y="123" width="1240" height="620" key="com.intellij.history.integration.ui.views.SelectionHistoryDialog" timestamp="1608013877683">
+      <screen x="0" y="23" width="1440" height="820" />
+    </state>
+    <state x="100" y="123" width="1240" height="620" key="com.intellij.history.integration.ui.views.SelectionHistoryDialog/0.23.1440.820@0.23.1440.820" timestamp="1608013877683" />
+    <state x="418" y="188" width="604" height="490" key="find.popup" timestamp="1608015674558">
+      <screen x="0" y="23" width="1440" height="820" />
+    </state>
+    <state x="418" y="188" width="604" height="490" key="find.popup/0.23.1440.820@0.23.1440.820" timestamp="1608015674558" />
+    <state x="385" y="167" width="670" height="676" key="search.everywhere.popup" timestamp="1608013091768">
+      <screen x="0" y="23" width="1440" height="820" />
+    </state>
+    <state x="385" y="167" width="670" height="676" key="search.everywhere.popup/0.23.1440.820@0.23.1440.820" timestamp="1608013091768" />
+  </component>
+</project>
