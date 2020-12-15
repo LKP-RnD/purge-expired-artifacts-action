@@ -1,21 +1,21 @@
-import {Artifact, hasExpired} from "./helpers";
 import * as core from '@actions/core';
-import { getOctokit} from '@actions/github';
-import { Inject } from 'typedi'
-import {Logger} from "./logger-base";
-import {Octokit} from "@octokit/core";
+import {Octokit} from '@octokit/rest';
+import {Octokit as O} from '@octokit/core';
+import { Inject } from 'typedi';
+import {Artifact, hasExpired} from './helpers';
+import {Logger} from './logger-base';
 
 export class Main {
   @Inject()
   private readonly logger: Logger;
-  private readonly octokit: Octokit
+  private readonly octokit : O;
   constructor() {
-    const ghToken = process.env.GITHUB_TOKEN
+    const ghToken = process.env.GITHUB_TOKEN;
     if (ghToken === undefined) {
-      this.logger.error("GITGUB_TOKEN env variable was not set.")
-      process.exit(1)
+      this.logger.error('GITGUB_TOKEN env variable was not set.');
+      process.exit(1);
     }
-    this.octokit = getOctokit(ghToken);
+    this.octokit = new Octokit({ghToken});
   }
 
   public async listRunArtifacts(owner: string, repo: string) {
@@ -56,7 +56,7 @@ export class Main {
     }
   }
 
-  run() {
+  public run() {
     this.runAction().catch((error: Error) => {
       core.setFailed(error.message);
     });

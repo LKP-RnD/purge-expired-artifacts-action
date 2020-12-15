@@ -1,5 +1,5 @@
-import {Logger, LogLevelEnum} from "./logger-base";
 import * as Transport from 'winston-transport';
+import {Logger, LogLevelEnum} from './logger-base';
 
 
 export class TestTransport extends Transport {

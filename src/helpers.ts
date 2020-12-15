@@ -1,6 +1,6 @@
 export interface Artifact {
-  Id: string
-  expires: number
+  Id: number;
+  expires: number;
 }
 
 export function hasExpired(artifact : Artifact) {

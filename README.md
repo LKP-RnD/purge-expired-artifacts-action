@@ -1,6 +1,6 @@
 **WARNING: This action will delete data. Use it with care and at your own risk.**
 
-![testrun](https://github.com/pablojomer/purge-expired-artifacts-action/workflows/testrun/badge.svg)
+![testrun](https://github.com/pablojomer/purge-expired-artifacts-action/workflows/build/badge.svg)
 
 # delete-run-artifacts
 

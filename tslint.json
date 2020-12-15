@@ -1,0 +1,38 @@
+{
+  "defaultSeverity": "error",
+  "extends": ["tslint:recommended", "tslint-config-airbnb", "tslint-config-prettier"],
+  "rules": {
+    "array-type": [true, "array"],
+    "quotemark": [true, "single", "avoid-escape", "avoid-template"],
+    "semicolon": [true, "always", "ignore-bound-class-methods"],
+    "no-magic-numbers": [
+      true,
+      -1,
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "deprecation": {
+      "severity": "warn"
+    },
+    "member-ordering": [
+      true,
+      {
+        "order": ["static-field", "instance-field", "static-method", "instance-method"]
+      }
+    ],
+    "no-duplicate-super": true,
+    "no-empty": false,
+    "no-non-null-assertion": true,
+    "no-switch-case-fall-through": true,
+    "object-shorthand-properties-first": false,
+    "object-literal-sort-keys": false,
+    "interface-name": false,
+    "curly": true,
+    "variable-name": [true, "check-format", "allow-leading-underscore"],
+    "no-import-side-effect": true
+  }
+}

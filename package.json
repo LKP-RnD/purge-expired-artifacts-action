@@ -2,12 +2,13 @@
   "name": "purge-expired-run-artifacts-action",
   "version": "1.0.0",
   "description": "",
-  "main": "src/index.js",
+  "main": "./index.ts",
   "scripts": {
     "test": "jest --config jest.unit.config.js",
-    "lint": "eslint 'src/**.js' --fix",
-    "precommit": "npm run build && git add dist/",
-    "build": "npm build ."
+    "lint": "tslint --project .",
+    "lint:fix": "tslint --project . --fix",
+    "precommit": "npm run lint && npm run test && npm run build && git add dist/",
+    "build": "ncc build ."
   },
   "repository": {
     "type": "git",
@@ -22,20 +23,14 @@
   "homepage": "https://github.com/pablojomere/purge-expired-run-artifacts-action#readme",
   "dependencies": {
     "@actions/core": "^1.2.6",
-    "@actions/github": "^4.0.0"
+    "@actions/github": "^4.0.0",
+    "@octokit/rest": "^18.0.12",
+    "@octokit/plugin-paginate-rest": "^2.6.2"
   },
   "devDependencies": {
     "@vercel/ncc": "^0.25.1",
     "@types/jest": "^26.0.19",
     "@types/mocha": "^8.2.0",
-    "eslint": "^7.15.0",
-    "eslint-config-airbnb": "^18.2.1",
-    "eslint-config-prettier": "^7.0.0",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jsx-a11y": "^6.4.1",
-    "eslint-plugin-prettier": "^3.3.0",
-    "eslint-plugin-react": "^7.21.5",
-    "eslint-plugin-react-hooks": "^4.2.0",
     "husky": "^4.3.6",
     "jest": "^26.6.3",
     "logform": "^2.2.0",
@@ -49,7 +44,7 @@
     "tslint-config-prettier": "^1.17.0",
     "tslint-junit-formatter": "^5.1.0",
     "typedi": "^0.8.0",
-    "typescript": "^3.3.3333",
+    "typescript": "^3.8.3",
     "winston": "^3.3.3",
     "winston-transport": "^4.4.0"
   },

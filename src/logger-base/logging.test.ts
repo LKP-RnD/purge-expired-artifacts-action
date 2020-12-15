@@ -1,6 +1,6 @@
 import { Logger, LogLevelEnum } from '.';
 
-import {TestTransport} from "../test.helpers";
+import {TestTransport} from '../test.helpers';
 
 describe('logger', () => {
   const testMessage = 'a test message';
