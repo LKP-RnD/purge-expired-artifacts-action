@@ -1,6 +1,6 @@
 import * as core from '@actions/core';
-import {Octokit} from '@octokit/rest';
 import {Octokit as O} from '@octokit/core';
+import {Octokit} from '@octokit/rest';
 import { Inject } from 'typedi';
 import {Artifact, hasExpired} from './helpers';
 import {Logger} from './logger-base';
