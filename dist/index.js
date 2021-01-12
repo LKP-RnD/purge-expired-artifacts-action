@@ -21912,8 +21912,12 @@ function wrappy (fn, cb) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
+const core = __webpack_require__(2186);
 const main_1 = __webpack_require__(399);
-new main_1.Main().run();
+const m = new main_1.Main();
+m.runAction().catch((error) => {
+    core.setFailed(error.message);
+});
 
 
 /***/ }),
@@ -21924,11 +21928,19 @@ new main_1.Main().run();
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.hasExpired = void 0;
+exports.getRepo = exports.getOwner = exports.hasExpired = void 0;
 function hasExpired(artifact) {
     return artifact.expires < Date.now();
 }
 exports.hasExpired = hasExpired;
+function getOwner(parentRepo) {
+    return parentRepo.split('/')[0];
+}
+exports.getOwner = getOwner;
+function getRepo(parentRepo) {
+    return parentRepo.split('/')[1];
+}
+exports.getRepo = getRepo;
 
 
 /***/ }),
@@ -21992,6 +22004,59 @@ exports.Logger = Logger;
 
 "use strict";
 
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.Main = void 0;
+const core = __webpack_require__(2186);
+const typedi_1 = __webpack_require__(3928);
+const helpers_1 = __webpack_require__(3015);
+const logger_base_1 = __webpack_require__(4881);
+const octokit_helper_1 = __webpack_require__(3278);
+class Main {
+    constructor() {
+        this.logger = typedi_1.Container.get(logger_base_1.Logger);
+        this.oh = typedi_1.Container.get(octokit_helper_1.OctokitHelper);
+    }
+    runAction() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const parentRepo = core.getInput('repo_to_purge');
+                const owner = helpers_1.getOwner(parentRepo);
+                const repo = helpers_1.getRepo(parentRepo);
+                let artifacts = yield this.oh.listRunArtifacts(owner, repo);
+                this.logger.info(`Artifacts purge: ${artifacts.length}`);
+                const deleteRequests = artifacts.map((artifact) => {
+                    this.logger.debug(`Purging artifact: ${artifact.name}`, artifact.id);
+                    return this.oh.delteExpiredArtifacts(owner, repo, artifact);
+                });
+                yield Promise.all(deleteRequests);
+                artifacts = yield this.oh.listRunArtifacts(owner, repo);
+                this.logger.info(`artifacts after deletion: ${artifacts.length}`);
+            }
+            catch (error) {
+                core.setFailed(error.message);
+            }
+        });
+    }
+}
+exports.Main = Main;
+
+
+/***/ }),
+
+/***/ 3278:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -22011,13 +22076,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.Main = void 0;
-const core = __webpack_require__(2186);
+exports.OctokitHelper = void 0;
 const rest_1 = __webpack_require__(5375);
 const typedi_1 = __webpack_require__(3928);
 const helpers_1 = __webpack_require__(3015);
 const logger_base_1 = __webpack_require__(4881);
-class Main {
+class OctokitHelper {
     constructor() {
         const ghToken = process.env.GITHUB_TOKEN;
         if (ghToken === undefined) {
@@ -22047,38 +22111,12 @@ class Main {
             }
         });
     }
-    runAction() {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const parentRepo = core.getInput('repo_to_purge');
-                const owner = parentRepo.split('/')[0];
-                const repo = parentRepo.split('/')[1];
-                let artifacts = yield this.listRunArtifacts(owner, repo);
-                this.logger.info(`Artifacts purge: ${artifacts.length}`);
-                const deleteRequests = artifacts.map((artifact) => {
-                    this.logger.debug(`Purging artifact: ${artifact.name}`, artifact.id);
-                    return this.delteExpiredArtifacts(owner, repo, artifact);
-                });
-                yield Promise.all(deleteRequests);
-                artifacts = yield this.listRunArtifacts(owner, repo);
-                this.logger.info(`artifacts after deletion: ${artifacts.length}`);
-            }
-            catch (error) {
-                core.setFailed(error.message);
-            }
-        });
-    }
-    run() {
-        this.runAction().catch((error) => {
-            core.setFailed(error.message);
-        });
-    }
 }
 __decorate([
     typedi_1.Inject(),
     __metadata("design:type", logger_base_1.Logger)
-], Main.prototype, "logger", void 0);
-exports.Main = Main;
+], OctokitHelper.prototype, "logger", void 0);
+exports.OctokitHelper = OctokitHelper;
 
 
 /***/ }),

@@ -43,3 +43,6 @@ typings/
 # dotenv environment variables file
 .env
 .env.test
+
+# IntelliJ Editors
+.idea/

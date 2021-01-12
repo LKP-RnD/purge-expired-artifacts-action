@@ -9,7 +9,7 @@ export class TestTransport extends Transport {
   }
 }
 
-export function setup(): { testTransport: TestTransport; logger: Logger } {
+export function setupTestLogger(): { testTransport: TestTransport; logger: Logger } {
   const testTransport = new TestTransport();
   const logger = new Logger(testTransport, LogLevelEnum.DEBUG);
   return { testTransport, logger };
