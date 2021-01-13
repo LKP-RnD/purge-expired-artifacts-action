@@ -23,11 +23,11 @@ export class Main {
         this.logger.debug(`Purging artifact: ${artifact.name}`, artifact.id);
         return this.oh.delteExpiredArtifacts(owner, repo, artifact);
       });
-      await Promise.all(deleteRequests);
+      await Promise.all(deleteRequests).catch(core.setFailed);
       artifacts = await this.oh.listRunArtifacts(owner, repo);
       this.logger.info(`artifacts after deletion: ${artifacts.length}`);
-    } catch (error) {
-      core.setFailed(error.message);
+    } catch (err) {
+      core.setFailed(err.message);
     }
   }
 }

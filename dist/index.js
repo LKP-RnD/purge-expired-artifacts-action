@@ -22037,12 +22037,12 @@ class Main {
                     this.logger.debug(`Purging artifact: ${artifact.name}`, artifact.id);
                     return this.oh.delteExpiredArtifacts(owner, repo, artifact);
                 });
-                yield Promise.all(deleteRequests);
+                yield Promise.all(deleteRequests).catch(core.setFailed);
                 artifacts = yield this.oh.listRunArtifacts(owner, repo);
                 this.logger.info(`artifacts after deletion: ${artifacts.length}`);
             }
-            catch (error) {
-                core.setFailed(error.message);
+            catch (err) {
+                core.setFailed(err.message);
             }
         });
     }

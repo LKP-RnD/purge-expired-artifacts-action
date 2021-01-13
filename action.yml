@@ -1,8 +1,8 @@
 name: 'purge-expired-artifacts'
 description: 'github action to remove expired artifacts from previously run actions'
 inputs:
-  parent_repo:
-    description: 'The github repo to purge of expired artifacts.'
+  repo_to_purge:
+    description: 'The github repo to purge of expired artifacts. E.g. user/repo'
     required: true
 runs:
   using: 'node12'
