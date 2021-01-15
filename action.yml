@@ -4,6 +4,9 @@ inputs:
   repo_to_purge:
     description: 'The github repo to purge of expired artifacts. E.g. user/repo'
     required: true
+  token:
+    description: 'The github repos secret token'
+    required: true
 runs:
   using: 'node12'
   main: 'dist/index.js'

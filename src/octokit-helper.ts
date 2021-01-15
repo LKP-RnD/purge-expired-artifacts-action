@@ -3,13 +3,14 @@ import { Octokit } from "@octokit/rest";
 import { Inject } from "typedi";
 import { Artifact } from "./helpers";
 import { Logger } from "./logger-base";
+import * as core from "@actions/core";
 
 export class OctokitHelper {
   @Inject()
   private readonly logger: Logger;
   private readonly octokit: O;
   constructor() {
-    const ghToken = process.env.GITHUB_TOKEN;
+    const ghToken = core.getInput("repo_to_purge");
     if (ghToken === undefined) {
       this.logger.error("GITGUB_TOKEN env variable was not set.");
       process.exit(1);

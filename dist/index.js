@@ -22590,9 +22590,10 @@ exports.OctokitHelper = void 0;
 const rest_1 = __webpack_require__(5375);
 const typedi_1 = __webpack_require__(3928);
 const logger_base_1 = __webpack_require__(4881);
+const core = __webpack_require__(2186);
 class OctokitHelper {
     constructor() {
-        const ghToken = process.env.GITHUB_TOKEN;
+        const ghToken = core.getInput("repo_to_purge");
         if (ghToken === undefined) {
             this.logger.error("GITGUB_TOKEN env variable was not set.");
             process.exit(1);
