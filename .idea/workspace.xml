@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="28f1069a-8035-4b60-847e-52324da886c1" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.github/workflows/build.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/build.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="28f1069a-8035-4b60-847e-52324da886c1" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -114,7 +111,7 @@
       <workItem from="1610431970945" duration="5334000" />
       <workItem from="1610448764843" duration="3007000" />
       <workItem from="1610523847955" duration="2167000" />
-      <workItem from="1610607966933" duration="9235000" />
+      <workItem from="1610607966933" duration="9297000" />
     </task>
     <servers />
   </component>
