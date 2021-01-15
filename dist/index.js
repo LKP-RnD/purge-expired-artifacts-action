@@ -22404,6 +22404,10 @@ function wrappy (fn, cb) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __webpack_require__(2186);
 const main_1 = __webpack_require__(399);
+const logger_base_1 = __webpack_require__(4881);
+const winston = __webpack_require__(4158);
+const typedi_1 = __webpack_require__(3928);
+typedi_1.Container.set(logger_base_1.Logger, new logger_base_1.Logger([new winston.transports.Console({ level: "info" })]));
 const m = new main_1.Main();
 m.runAction().catch((error) => {
     core.setFailed(error.message);
