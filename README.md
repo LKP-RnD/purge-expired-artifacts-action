@@ -1,6 +1,6 @@
 **WARNING: This action will delete data. Use it with care and at your own risk.**
 
-![testrun](https://github.com/LKP-RnD/purge-expired-artifacts-action/workflows/build/badge.svg)
+![testrun](https://github.com/LKP-RnD/purge-expired-artifacts-action/workflows/Build/badge.svg)
 
 # delete-run-artifacts
 
