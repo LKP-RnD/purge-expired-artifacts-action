@@ -4,8 +4,8 @@ on:
     branches:
       - main
     paths:
-      - license-system/**
-      - .github/workflows/license-system.yml
+      - src/**
+      - .github/workflows/build.yml
 jobs:
   build:
     runs-on: ubuntu-latest
