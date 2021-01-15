@@ -1,6 +1,6 @@
 **WARNING: This action will delete data. Use it with care and at your own risk.**
 
-![testrun](https://github.com/pablojomer/purge-expired-artifacts-action/workflows/build/badge.svg)
+![testrun](https://github.com/LKP-RnD/purge-expired-artifacts-action/workflows/build/badge.svg)
 
 # delete-run-artifacts
 
@@ -20,18 +20,18 @@ jobs:
   purge-artifacts:
     runs-on: ubuntu-latest
     steps:
-      - uses: PabloJomer/Purge-expired-artifact-actions@v1
+      - uses: LKP-RnD/Purge-expired-artifact-actions@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
     with:
-      repo_to_purge: "your-github-user/your-repo"
+      repo_to_purge: "your-github-user-or-org/your-repo"
 ```
 
 ## Inputs
 
 ### `repo_to_purge`
 
-**Required** the github repo to purge of expired artifacts. Example: `"your-github-user/your-repo"`.
+**Required** the github repo to purge of expired artifacts. Example: `"your-github-user-or-org/your-repo"`.
 
 ## Outputs
 
