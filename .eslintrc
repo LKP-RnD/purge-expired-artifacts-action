@@ -1,24 +1,71 @@
 {
   "extends": [
-    "airbnb",
-    "prettier"
+    "plugin:@typescript-eslint/recommended",
+    "prettier/@typescript-eslint",
+    "plugin:prettier/recommended"
   ],
+  "root": true,
   "env": {
-    "es6": true,
     "node": true,
-    "jest": true
+    "browser": false
   },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module"
+  },
+  "settings": {},
   "rules": {
-    "prettier/prettier": [
-      "error",
-      {
-        "trailingComma": "none",
-        "singleQuote": true,
-        "printWidth": 120
-      }
-    ]
+    "no-magic-numbers": ["error", {
+      "ignore": [-1, 0, 1]
+    }],
+    "no-console": "error",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-use-before-define": "off",
+    "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }],
+    "unused-imports/no-unused-imports": 2,
+    "no-restricted-imports": ["error", {
+      "patterns": ["dist/", "*/index"]
+    }],
+    "no-duplicate-imports": "error"
   },
-  "plugins": [
-    "prettier"
+  "ignorePatterns": ["dist", "node_modules", "bin"],
+  "overrides": [
+    {
+      "files": ["*.js"],
+      "rules": {
+        "@typescript-eslint/no-var-requires": "off"
+      }
+    },
+    {
+      "files": ["*.ts", "*.tsx"],
+      "parser": "@typescript-eslint/parser",
+      "parserOptions": {
+        "project": "tsconfig.json",
+        "sourceType": "module",
+        "ecmaVersion": 6,
+        "ecmaFeatures": {
+          "modules": true
+        }
+      },
+      "plugins": [
+        "unused-imports",
+        "@typescript-eslint"
+      ],
+      "rules": {
+        "@typescript-eslint/prefer-readonly": ["error", {
+          "onlyInlineLambdas": true
+        }],
+        "@typescript-eslint/explicit-member-accessibility": ["error", {
+          "accessibility": "no-public"
+        }]
+      }
+    },
+    {
+      "files": ["*.spec.ts", "*.test.ts", "test-helpers.ts"],
+      "rules": {
+        "@typescript-eslint/no-explicit-any": "off",
+        "no-magic-numbers": "off"
+      }
+    }
   ]
 }

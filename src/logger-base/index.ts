@@ -1,12 +1,12 @@
-import * as logform from 'logform';
-import * as winston from 'winston';
-import * as Transport from 'winston-transport';
+import * as logform from "logform";
+import * as winston from "winston";
+import * as Transport from "winston-transport";
 
 export enum LogLevelEnum {
-  DEBUG = 'debug',
-  INFO = 'info',
-  WARN = 'warn',
-  ERROR = 'error'
+  DEBUG = "debug",
+  INFO = "info",
+  WARN = "warn",
+  ERROR = "error",
 }
 
 const defaultFormat: logform.Format = winston.format.combine(
@@ -15,7 +15,7 @@ const defaultFormat: logform.Format = winston.format.combine(
 );
 
 export class Logger {
-  private logger: winston.Logger;
+  private readonly logger: winston.Logger;
 
   constructor(
     transports: Transport[] | Transport,
@@ -26,31 +26,38 @@ export class Logger {
       level: logLevel,
       format,
       exitOnError: false,
-      transports
+      transports,
     });
   }
-
-  public debug(message: string, params?: any, error?: Error) {
+  /* eslint-disable  @typescript-eslint/no-explicit-any,@typescript-eslint/explicit-module-boundary-types*/
+  debug(message: string, params?: any, error?: Error): void {
     this.internalLog(LogLevelEnum.DEBUG, message, params, error);
   }
-
-  public info(message: string, params?: any, error?: Error) {
+  /* eslint-disable  @typescript-eslint/no-explicit-any,@typescript-eslint/explicit-module-boundary-types*/
+  info(message: string, params?: any, error?: Error): void {
     this.internalLog(LogLevelEnum.INFO, message, params, error);
   }
-
-  public error(message: string, params?: any, error?: Error) {
+  /* eslint-disable  @typescript-eslint/no-explicit-any,@typescript-eslint/explicit-module-boundary-types*/
+  error(message: string, params?: any, error?: Error): void {
     this.internalLog(LogLevelEnum.ERROR, message, params, error);
   }
-
-  public warn(message: string, params?: any, error?: Error) {
+  /* eslint-disable  @typescript-eslint/no-explicit-any,@typescript-eslint/explicit-module-boundary-types*/
+  warn(message: string, params?: any, error?: Error): void {
     this.internalLog(LogLevelEnum.WARN, message, params, error);
   }
 
   private createErrorStack(e: any): string {
-    return e.reason ? `${e.stack}\n${this.createErrorStack(e.reason)}` : e.stack;
+    return e.reason
+      ? `${e.stack}\n${this.createErrorStack(e.reason)}`
+      : e.stack;
   }
 
-  private internalLog(level: string, message: string, params?: any, error?: Error) {
+  private internalLog(
+    level: string,
+    message: string,
+    params?: any,
+    error?: Error
+  ) {
     let logEntry: winston.LogEntry = { level, message, params, error };
     if (error) {
       const errorWithStack = `\n${this.createErrorStack(error)}`;
