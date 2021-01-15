@@ -1,22 +1,27 @@
-name: 'Build'
-on:
+---
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: "Checkout repo"
+        uses: actions/checkout@v2
+      -
+        name: "Install npm packages"
+        uses: bahmutov/npm-install@v1
+        with:
+          working-directory: "."
+      -
+        name: Test
+        run: "npm test"
+      -
+        name: Build
+        run: "npm build"
+name: Build
+true:
   push:
     branches:
       - master
     paths:
       - license-system/**
       - .github/workflows/license-system.yml
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repo
-          uses: actions/checkout@v2
-      - name: Install npm packages
-          uses: bahmutov/npm-install@v1
-          with:
-            working-directory: .
-      - name: Test
-        run: npm test
-      - name: Build
-        run: npm build
