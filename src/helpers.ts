@@ -1,6 +1,7 @@
 export interface Artifact {
-  Id: number;
+  id: number;
   expires: number;
+  name: string;
 }
 
 export function hasExpired(artifact : Artifact) {
@@ -8,9 +9,17 @@ export function hasExpired(artifact : Artifact) {
 }
 
 export function getOwner(parentRepo: string): string {
-  return parentRepo.split('/')[0];
+  const stringParts =  parentRepo.split('/');
+  if (stringParts.length !== 2){
+    throw new Error(`Expected parentRpo to use the format user/repo, got ${parentRepo}`);
+  }
+  return stringParts[0];
 }
 
 export function getRepo(parentRepo: string): string {
-  return parentRepo.split('/')[1];
+  const stringParts = parentRepo.split('/');
+  if (stringParts.length !== 2){
+    throw new Error(`Expected parentRpo to use the format user/repo, got ${parentRepo}`);
+  }
+  return stringParts[1];
 }

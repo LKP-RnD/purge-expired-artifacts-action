@@ -1,7 +1,7 @@
 import {Octokit as O} from '@octokit/core';
 import {Octokit} from '@octokit/rest';
 import {Inject} from 'typedi';
-import {Artifact, hasExpired} from './helpers';
+import {Artifact} from './helpers';
 import {Logger} from './logger-base';
 
 export class OctokitHelper {
@@ -26,14 +26,12 @@ export class OctokitHelper {
     return listWorkflowRunArtifactsResponse.data.artifacts;
   }
 
-  public async delteExpiredArtifacts(owner: string, repo: string, artifact: Artifact): Promise<void> {
-    if (hasExpired(artifact)) {
+  public async delteArtifact(owner: string, repo: string, artifact: Artifact): Promise<void> {
       const deleteArtifactResponse = await this.octokit.actions.deleteArtifact({
         owner,
         repo,
-        artifact_id: artifact.Id
+        artifact_id: artifact.id
       });
       this.logger.debug(`status: ${deleteArtifactResponse.status}`);
-    }
   }
 }

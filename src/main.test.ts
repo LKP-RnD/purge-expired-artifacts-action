@@ -17,7 +17,7 @@ describe('Main', () => {
     o.setupMock({
       listRunArtifactsResponse: [],
       listRunArtifactsError: new Error('Test error'),
-      delteExpiredArtifactsError: null
+      delteArtifactError: null
     });
   });
 
@@ -29,7 +29,7 @@ describe('Main', () => {
     o.setupMock({
       listRunArtifactsResponse: [],
       listRunArtifactsError: new Error('List error'),
-      delteExpiredArtifactsError: null
+      delteArtifactError: null
     });
     const setFailedSpy = jest.spyOn(core, 'setFailed');
     const m = new Main;
@@ -39,9 +39,9 @@ describe('Main', () => {
 
   it('should setFailed when unable to delete artifacts', async () => {
     o.setupMock({
-      listRunArtifactsResponse: [{ Id: 1, expires: 0}],
+      listRunArtifactsResponse: [{ id: 1, expires: 0, name: ''}],
       listRunArtifactsError: null,
-      delteExpiredArtifactsError: new Error('Delete error')
+      delteArtifactError: new Error('Delete error')
     });
     const setFailedSpy = jest.spyOn(core, 'setFailed');
     const m = new Main;
@@ -49,18 +49,21 @@ describe('Main', () => {
     expect(setFailedSpy).toHaveBeenCalled();
   });
 
-  it('should NOT setFailed when artifacts deleted', async () => {
-    process.env.INPUT_REPO_TO_PURGE = 'github-user/hello-world';
+  it('should list and delete the correct artifacts', async () => {
+    process.env.INPUT_REPO_TO_PURGE = 'gitUser/gitRepo';
     o.setupMock({
-      listRunArtifactsResponse: [{ Id: 1, expires: 0}],
+      listRunArtifactsResponse: [{ id: 1, expires: 0, name: ''}],
       listRunArtifactsError: null,
-      delteExpiredArtifactsError: null
+      delteArtifactError: null
     });
     const setFailedSpy = jest.spyOn(core, 'setFailed');
     const m = new Main;
     await m.runAction();
     expect(setFailedSpy).not.toHaveBeenCalled();
-    expect(o.calls[0].params.repo).toBe('hello-world');
-    expect(o.calls[0].params.owner).toBe('github-user');
+    expect(o.calls[0].params.repo).toBe('gitRepo');
+    expect(o.calls[0].params.owner).toBe('gitUser');
+    expect(o.calls[1].call).toBe('delete');
+    expect(o.calls[1].params.owner).toBe('gitUser');
+    expect(o.calls[1].params.repo).toBe('gitRepo');
   });
 });

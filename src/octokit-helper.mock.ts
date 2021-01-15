@@ -4,7 +4,7 @@ import {Artifact} from './helpers';
 interface OctokitMockResponses {
   listRunArtifactsResponse: Artifact[];
   listRunArtifactsError: Error | null;
-  delteExpiredArtifactsError: Error | null;
+  delteArtifactError: Error | null;
 }
 
 interface Call {
@@ -28,10 +28,10 @@ export class OctokitHelperMock {
     return Promise.resolve(this.responses.listRunArtifactsResponse);
   }
 
-  public async delteExpiredArtifacts(owner: string, repo: string, artifact: Artifact): Promise<void> {
-    if (this.responses.delteExpiredArtifactsError !== null){
+  public async delteArtifact(owner: string, repo: string, artifact: Artifact): Promise<void> {
+    this.calls.push({call: 'delete', params : {owner, repo, artifact}});
+    if (this.responses.delteArtifactError !== null){
       throw this.responses.listRunArtifactsError;
     }
-    this.calls.push({call: 'delete', params : {owner, repo, artifact}});
   }
 }

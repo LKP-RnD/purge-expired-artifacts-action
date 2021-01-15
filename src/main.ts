@@ -1,6 +1,6 @@
 import * as core from '@actions/core';
 import {Container} from 'typedi';
-import {getOwner, getRepo} from './helpers';
+import {Artifact, getOwner, getRepo, hasExpired} from './helpers';
 import {Logger} from './logger-base';
 import {OctokitHelper} from './octokit-helper';
 
@@ -19,9 +19,10 @@ export class Main {
       const repo = getRepo(parentRepo);
       let artifacts = await this.oh.listRunArtifacts(owner, repo);
       this.logger.info(`Artifacts purge: ${artifacts.length}`);
-      const deleteRequests = artifacts.map((artifact : any) => {
+      const expiredArtifacts = artifacts.filter((artifact : Artifact) => hasExpired(artifact));
+      const deleteRequests = expiredArtifacts.map((artifact : Artifact) => {
         this.logger.debug(`Purging artifact: ${artifact.name}`, artifact.id);
-        return this.oh.delteExpiredArtifacts(owner, repo, artifact);
+        return this.oh.delteArtifact(owner, repo, artifact);
       });
       await Promise.all(deleteRequests).catch(core.setFailed);
       artifacts = await this.oh.listRunArtifacts(owner, repo);

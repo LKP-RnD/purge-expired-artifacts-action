@@ -21934,11 +21934,19 @@ function hasExpired(artifact) {
 }
 exports.hasExpired = hasExpired;
 function getOwner(parentRepo) {
-    return parentRepo.split('/')[0];
+    const stringParts = parentRepo.split('/');
+    if (stringParts.length !== 2) {
+        throw new Error(`Expected parentRpo to use the format user/repo, got ${parentRepo}`);
+    }
+    return stringParts[0];
 }
 exports.getOwner = getOwner;
 function getRepo(parentRepo) {
-    return parentRepo.split('/')[1];
+    const stringParts = parentRepo.split('/');
+    if (stringParts.length !== 2) {
+        throw new Error(`Expected parentRpo to use the format user/repo, got ${parentRepo}`);
+    }
+    return stringParts[1];
 }
 exports.getRepo = getRepo;
 
@@ -22033,9 +22041,10 @@ class Main {
                 const repo = helpers_1.getRepo(parentRepo);
                 let artifacts = yield this.oh.listRunArtifacts(owner, repo);
                 this.logger.info(`Artifacts purge: ${artifacts.length}`);
-                const deleteRequests = artifacts.map((artifact) => {
+                const expiredArtifacts = artifacts.filter((artifact) => helpers_1.hasExpired(artifact));
+                const deleteRequests = expiredArtifacts.map((artifact) => {
                     this.logger.debug(`Purging artifact: ${artifact.name}`, artifact.id);
-                    return this.oh.delteExpiredArtifacts(owner, repo, artifact);
+                    return this.oh.delteArtifact(owner, repo, artifact);
                 });
                 yield Promise.all(deleteRequests).catch(core.setFailed);
                 artifacts = yield this.oh.listRunArtifacts(owner, repo);
@@ -22079,7 +22088,6 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.OctokitHelper = void 0;
 const rest_1 = __webpack_require__(5375);
 const typedi_1 = __webpack_require__(3928);
-const helpers_1 = __webpack_require__(3015);
 const logger_base_1 = __webpack_require__(4881);
 class OctokitHelper {
     constructor() {
@@ -22099,16 +22107,14 @@ class OctokitHelper {
             return listWorkflowRunArtifactsResponse.data.artifacts;
         });
     }
-    delteExpiredArtifacts(owner, repo, artifact) {
+    delteArtifact(owner, repo, artifact) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (helpers_1.hasExpired(artifact)) {
-                const deleteArtifactResponse = yield this.octokit.actions.deleteArtifact({
-                    owner,
-                    repo,
-                    artifact_id: artifact.Id
-                });
-                this.logger.debug(`status: ${deleteArtifactResponse.status}`);
-            }
+            const deleteArtifactResponse = yield this.octokit.actions.deleteArtifact({
+                owner,
+                repo,
+                artifact_id: artifact.id
+            });
+            this.logger.debug(`status: ${deleteArtifactResponse.status}`);
         });
     }
 }
