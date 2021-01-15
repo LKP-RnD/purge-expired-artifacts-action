@@ -20,11 +20,10 @@ jobs:
   purge-artifacts:
     runs-on: ubuntu-latest
     steps:
-      - uses: LKP-RnD/Purge-expired-artifact-actions@v1
+      - uses: LKP-RnD/purge-expired-artifacts-action@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-    with:
-      repo_to_purge: "your-github-user-or-org/your-repo"
+          repo_to_purge: "your-github-user-or-org/your-repo"
 ```
 
 ## Inputs
