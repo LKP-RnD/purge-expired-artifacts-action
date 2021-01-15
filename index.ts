@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import * as core from "@actions/core";
 import { Main } from "./src/main";
 import { Logger } from "src/logger-base";

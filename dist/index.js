@@ -22402,6 +22402,7 @@ function wrappy (fn, cb) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
+__webpack_require__(425);
 const core = __webpack_require__(2186);
 const main_1 = __webpack_require__(399);
 const logger_base_1 = __webpack_require__(4881);
@@ -22633,6 +22634,14 @@ exports.OctokitHelper = OctokitHelper;
 /***/ ((module) => {
 
 module.exports = eval("require")("encoding");
+
+
+/***/ }),
+
+/***/ 425:
+/***/ ((module) => {
+
+module.exports = eval("require")("reflect-metadata");
 
 
 /***/ }),
