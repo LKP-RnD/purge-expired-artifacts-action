@@ -5,11 +5,11 @@ import { Logger } from "src/logger-base";
 import * as winston from "winston";
 import { Container } from "typedi";
 
-Container.set(
-  Logger,
-  new Logger([new winston.transports.Console({ level: "info" })])
-);
+const logger = new Logger([new winston.transports.Console({ level: "info" })]);
+
+Container.set(Logger, logger);
 const m = new Main();
 m.runAction().catch((error: Error) => {
+  logger.error(error.message);
   core.setFailed(error.message);
 });
