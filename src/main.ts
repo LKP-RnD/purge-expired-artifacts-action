@@ -14,22 +14,23 @@ export class Main {
 
   async runAction(): Promise<void> {
     try {
-      const parentRepo = core.getInput("repo_to_purge");
-      const owner = getOwner(parentRepo);
-      const repo = getRepo(parentRepo);
+      const repoToPurge = core.getInput("repo_to_purge");
+      const owner = getOwner(repoToPurge);
+      const repo = getRepo(repoToPurge);
       let artifacts = await this.oh.listRunArtifacts(owner, repo);
       this.logger.info(`Artifacts purge: ${artifacts.length}`);
       const expiredArtifacts = artifacts.filter((artifact: Artifact) =>
         hasExpired(artifact)
       );
       const deleteRequests = expiredArtifacts.map((artifact: Artifact) => {
-        this.logger.debug(`Purging artifact: ${artifact.name}`, artifact.id);
+        this.logger.info(`Purging artifact: ${artifact.name}`, artifact.id);
         return this.oh.delteArtifact(owner, repo, artifact);
       });
       await Promise.all(deleteRequests).catch(core.setFailed);
       artifacts = await this.oh.listRunArtifacts(owner, repo);
-      this.logger.info(`artifacts after deletion: ${artifacts.length}`);
+      this.logger.info(`Artifacts after deletion: ${artifacts.length}`);
     } catch (err) {
+      this.logger.error(err.message);
       core.setFailed(err.message);
     }
   }

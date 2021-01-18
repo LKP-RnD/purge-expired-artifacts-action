@@ -10,12 +10,12 @@ export class OctokitHelper {
   private readonly logger: Logger;
   private readonly octokit: O;
   constructor() {
-    const ghToken = core.getInput("repo_to_purge");
+    const ghToken = core.getInput("token");
     if (ghToken === undefined) {
       this.logger.error("GITGUB_TOKEN env variable was not set.");
       process.exit(1);
     }
-    this.octokit = new Octokit({ ghToken });
+    this.octokit = new Octokit({ auth: `token ${ghToken}` });
   }
 
   async listRunArtifacts(owner: string, repo: string): Promise<Artifact[]> {
