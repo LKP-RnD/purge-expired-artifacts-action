@@ -33,11 +33,15 @@ export class OctokitHelper {
     repo: string,
     artifact: Artifact
   ): Promise<void> {
-    const deleteArtifactResponse = await this.octokit.actions.deleteArtifact({
-      owner,
-      repo,
-      artifact_id: artifact.id,
-    });
-    this.logger.debug(`status: ${deleteArtifactResponse.status}`);
+    try {
+      const deleteArtifactResponse = await this.octokit.actions.deleteArtifact({
+        owner,
+        repo,
+        artifact_id: artifact.id,
+      });
+      this.logger.debug(`status: ${deleteArtifactResponse.status}`);
+    } catch (error) {
+      this.logger.error(`Could not delete artifact with id ${artifact.id}`);
+    }
   }
 }

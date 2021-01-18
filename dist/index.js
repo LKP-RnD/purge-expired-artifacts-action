@@ -23237,8 +23237,8 @@ class Main {
                 const owner = helpers_1.getOwner(repoToPurge);
                 const repo = helpers_1.getRepo(repoToPurge);
                 let artifacts = yield this.oh.listRunArtifacts(owner, repo);
-                this.logger.info(`Artifacts purge: ${artifacts.length}`);
                 const expiredArtifacts = artifacts.filter((artifact) => helpers_1.hasExpired(artifact));
+                this.logger.info(`Artifacts to purge: ${expiredArtifacts.length}`);
                 const deleteRequests = expiredArtifacts.map((artifact) => {
                     this.logger.info(`Purging artifact: ${artifact.name}`, artifact.id);
                     return this.oh.delteArtifact(owner, repo, artifact);
@@ -23308,12 +23308,17 @@ class OctokitHelper {
     }
     delteArtifact(owner, repo, artifact) {
         return __awaiter(this, void 0, void 0, function* () {
-            const deleteArtifactResponse = yield this.octokit.actions.deleteArtifact({
-                owner,
-                repo,
-                artifact_id: artifact.id,
-            });
-            this.logger.debug(`status: ${deleteArtifactResponse.status}`);
+            try {
+                const deleteArtifactResponse = yield this.octokit.actions.deleteArtifact({
+                    owner,
+                    repo,
+                    artifact_id: artifact.id,
+                });
+                this.logger.debug(`status: ${deleteArtifactResponse.status}`);
+            }
+            catch (error) {
+                this.logger.error(`Could not delete artifact with id ${artifact.id}`);
+            }
         });
     }
 }

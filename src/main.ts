@@ -18,10 +18,10 @@ export class Main {
       const owner = getOwner(repoToPurge);
       const repo = getRepo(repoToPurge);
       let artifacts = await this.oh.listRunArtifacts(owner, repo);
-      this.logger.info(`Artifacts purge: ${artifacts.length}`);
       const expiredArtifacts = artifacts.filter((artifact: Artifact) =>
         hasExpired(artifact)
       );
+      this.logger.info(`Artifacts to purge: ${expiredArtifacts.length}`);
       const deleteRequests = expiredArtifacts.map((artifact: Artifact) => {
         this.logger.info(`Purging artifact: ${artifact.name}`, artifact.id);
         return this.oh.delteArtifact(owner, repo, artifact);
