@@ -3,8 +3,12 @@ const today = new Date();
 const yesterday = new Date(new Date().setDate(today.getDate() - 1));
 const tomorrow = new Date(new Date().setDate(today.getDate() + 1));
 
-const expiredArtifact = { id: 1, expires: yesterday.toISOString(), name: "" };
-const liveArtifact = { id: 1, expires: tomorrow.toISOString(), name: "" };
+const expiredArtifact = {
+  id: 1,
+  expires_at: yesterday.toISOString(),
+  name: "",
+};
+const liveArtifact = { id: 1, expires_at: tomorrow.toISOString(), name: "" };
 
 describe("Helpers", () => {
   describe("hasExpired", () => {

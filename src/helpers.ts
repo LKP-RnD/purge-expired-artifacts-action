@@ -1,13 +1,13 @@
 export interface Artifact {
   id: number;
-  expires: string;
+  expires_at: string;
   name: string;
 }
 
 const numberOfFields = 2;
 
 export function hasExpired(artifact: Artifact): boolean {
-  return Date.parse(artifact.expires) < Date.now();
+  return Date.parse(artifact.expires_at) < Date.now();
 }
 
 export function getOwner(parentRepo: string): string {

@@ -23565,7 +23565,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getRepo = exports.getOwner = exports.hasExpired = void 0;
 const numberOfFields = 2;
 function hasExpired(artifact) {
-    return Date.parse(artifact.expires) < Date.now();
+    return Date.parse(artifact.expires_at) < Date.now();
 }
 exports.hasExpired = hasExpired;
 function getOwner(parentRepo) {

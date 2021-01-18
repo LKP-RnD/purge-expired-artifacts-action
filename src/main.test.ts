@@ -40,7 +40,7 @@ describe("Main", () => {
   it("should setFailed when unable to delete artifacts", async () => {
     o.setupMock({
       listRunArtifactsResponse: [
-        { id: 1, expires: new Date(0).toISOString(), name: "" },
+        { id: 1, expires_at: new Date(0).toISOString(), name: "" },
       ],
       listRunArtifactsError: null,
       delteArtifactError: new Error("Delete error"),
@@ -55,7 +55,7 @@ describe("Main", () => {
     process.env.INPUT_REPO_TO_PURGE = "gitUser/gitRepo";
     o.setupMock({
       listRunArtifactsResponse: [
-        { id: 1, expires: new Date(0).toISOString(), name: "" },
+        { id: 1, expires_at: new Date(0).toISOString(), name: "" },
       ],
       listRunArtifactsError: null,
       delteArtifactError: null,
