@@ -23237,7 +23237,10 @@ class Main {
                 const owner = helpers_1.getOwner(repoToPurge);
                 const repo = helpers_1.getRepo(repoToPurge);
                 let artifacts = yield this.oh.listRunArtifacts(owner, repo);
-                const expiredArtifacts = artifacts.filter((artifact) => helpers_1.hasExpired(artifact));
+                const expiredArtifacts = artifacts.filter((artifact) => {
+                    this.logger.info(`artifact: ${artifact.name}, ${artifact.id}, ${artifact.expires}`);
+                    return helpers_1.hasExpired(artifact);
+                });
                 this.logger.info(`Artifacts to purge: ${expiredArtifacts.length}`);
                 const deleteRequests = expiredArtifacts.map((artifact) => {
                     this.logger.info(`Purging artifact: ${artifact.name}`, artifact.id);
