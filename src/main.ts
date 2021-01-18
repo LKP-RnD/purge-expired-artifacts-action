@@ -19,9 +19,6 @@ export class Main {
       const repo = getRepo(repoToPurge);
       let artifacts = await this.oh.listRunArtifacts(owner, repo);
       const expiredArtifacts = artifacts.filter((artifact: Artifact) => {
-        this.logger.info(
-          `artifact: ${artifact.name}, ${artifact.id}, ${artifact.expires}`
-        );
         return hasExpired(artifact);
       });
       this.logger.info(`Artifacts to purge: ${expiredArtifacts.length}`);

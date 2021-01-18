@@ -1,10 +1,10 @@
 import { getOwner, getRepo, hasExpired } from "./helpers";
 const today = new Date();
-const yesterday = new Date().setDate(today.getDate() - 1);
-const tomorrow = new Date().setDate(today.getDate() + 1);
+const yesterday = new Date(new Date().setDate(today.getDate() - 1));
+const tomorrow = new Date(new Date().setDate(today.getDate() + 1));
 
-const expiredArtifact = { id: 1, expires: yesterday, name: "" };
-const liveArtifact = { id: 1, expires: tomorrow, name: "" };
+const expiredArtifact = { id: 1, expires: yesterday.toISOString(), name: "" };
+const liveArtifact = { id: 1, expires: tomorrow.toISOString(), name: "" };
 
 describe("Helpers", () => {
   describe("hasExpired", () => {
