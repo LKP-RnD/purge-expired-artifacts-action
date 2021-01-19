@@ -21,7 +21,7 @@ jobs:
   purge-artifacts:
     runs-on: ubuntu-latest
     steps:
-      - uses: LKP-RnD/purge-expired-artifacts-action@v1
+      - uses: LKP-RnD/purge-expired-artifacts-action@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           repo_to_purge: "your-github-user-or-org/your-repo"
@@ -38,7 +38,7 @@ jobs:
   purge-artifacts:
     runs-on: ubuntu-latest
     steps:
-      - uses: LKP-RnD/purge-expired-artifacts-action@v1
+      - uses: LKP-RnD/purge-expired-artifacts-action@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           repo_to_purge: "your-github-user-or-org/your-repo"
