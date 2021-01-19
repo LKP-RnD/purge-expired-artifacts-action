@@ -2,11 +2,14 @@ name: 'purge-expired-artifacts'
 description: 'github action to remove expired artifacts from previously run actions'
 inputs:
   repo_to_purge:
-    description: 'The github repo to purge of expired artifacts. E.g. user/repo'
+    description: 'The github repo to purge of expired artifacts. E.g. user/repo.'
     required: true
   token:
-    description: 'The github repos secret token'
+    description: 'The github repos secret token.'
     required: true
+  dry_run:
+    description: 'If set to true the action will log expired artifacts instead of deleting. Logging is enabled by default set it to false, once you have verified.'
+    default: 'true'
 runs:
   using: 'node12'
   main: 'dist/index.js'

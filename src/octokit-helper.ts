@@ -10,9 +10,12 @@ export class OctokitHelper {
   @Inject()
   private readonly logger: Logger;
   private readonly octokit: O;
+  private readonly dryRun: boolean;
+
   constructor() {
     const OctokitWithPlugins = O.plugin(paginateRest, restEndpointMethods);
     const ghToken = core.getInput("token");
+    this.dryRun = core.getInput("dry_run") === "true";
     if (ghToken === undefined) {
       this.logger.error("GITGUB_TOKEN env variable was not set.");
       process.exit(1);
@@ -40,12 +43,20 @@ export class OctokitHelper {
     artifact: Artifact
   ): Promise<void> {
     try {
-      const deleteArtifactResponse = await this.octokit.actions.deleteArtifact({
-        owner,
-        repo,
-        artifact_id: artifact.id,
-      });
-      this.logger.debug(`status: ${deleteArtifactResponse.status}`);
+      if (this.dryRun) {
+        this.logger.info(
+          `[Dry run]: Would have deleted artifact: ${artifact.id} ${artifact.expires_at} ${artifact.name}`
+        );
+      } else {
+        const deleteArtifactResponse = await this.octokit.actions.deleteArtifact(
+          {
+            owner,
+            repo,
+            artifact_id: artifact.id,
+          }
+        );
+        this.logger.debug(`status: ${deleteArtifactResponse.status}`);
+      }
     } catch (error) {
       this.logger.error(`Could not delete artifact with id ${artifact.id}`);
     }
