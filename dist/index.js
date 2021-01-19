@@ -1738,44 +1738,6 @@ exports.paginateRest = paginateRest;
 
 /***/ }),
 
-/***/ 8883:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-
-const VERSION = "1.0.2";
-
-/**
- * @param octokit Octokit instance
- * @param options Options passed to Octokit constructor
- */
-
-function requestLog(octokit) {
-  octokit.hook.wrap("request", (request, options) => {
-    octokit.log.debug("request", options);
-    const start = Date.now();
-    const requestOptions = octokit.request.endpoint.parse(options);
-    const path = requestOptions.url.replace(options.baseUrl, "");
-    return request(options).then(response => {
-      octokit.log.info(`${requestOptions.method} ${path} - ${response.status} in ${Date.now() - start}ms`);
-      return response;
-    }).catch(error => {
-      octokit.log.info(`${requestOptions.method} ${path} - ${error.status} in ${Date.now() - start}ms`);
-      throw error;
-    });
-  });
-}
-requestLog.VERSION = VERSION;
-
-exports.requestLog = requestLog;
-//# sourceMappingURL=index.js.map
-
-
-/***/ }),
-
 /***/ 3044:
 /***/ ((__unused_webpack_module, exports) => {
 
@@ -3178,31 +3140,6 @@ function isPlainObject(o) {
 }
 
 exports.isPlainObject = isPlainObject;
-
-
-/***/ }),
-
-/***/ 5375:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-
-var core = __webpack_require__(6762);
-var pluginRequestLog = __webpack_require__(8883);
-var pluginPaginateRest = __webpack_require__(4193);
-var pluginRestEndpointMethods = __webpack_require__(3044);
-
-const VERSION = "18.0.12";
-
-const Octokit = core.Octokit.plugin(pluginRequestLog.requestLog, pluginRestEndpointMethods.restEndpointMethods, pluginPaginateRest.paginateRest).defaults({
-  userAgent: `octokit-rest.js/${VERSION}`
-});
-
-exports.Octokit = Octokit;
-//# sourceMappingURL=index.js.map
 
 
 /***/ }),
@@ -23728,28 +23665,51 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __asyncValues = (this && this.__asyncValues) || function (o) {
+    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+    var m = o[Symbol.asyncIterator], i;
+    return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
+    function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
+    function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.OctokitHelper = void 0;
-const rest_1 = __webpack_require__(5375);
+const core_1 = __webpack_require__(6762);
+const plugin_paginate_rest_1 = __webpack_require__(4193);
+const plugin_rest_endpoint_methods_1 = __webpack_require__(3044);
 const typedi_1 = __webpack_require__(3928);
 const logger_base_1 = __webpack_require__(4881);
 const core = __webpack_require__(2186);
 class OctokitHelper {
     constructor() {
+        const OctokitWithPlugins = core_1.Octokit.plugin(plugin_paginate_rest_1.paginateRest, plugin_rest_endpoint_methods_1.restEndpointMethods);
         const ghToken = core.getInput("token");
         if (ghToken === undefined) {
             this.logger.error("GITGUB_TOKEN env variable was not set.");
             process.exit(1);
         }
-        this.octokit = new rest_1.Octokit({ auth: `token ${ghToken}` });
+        this.octokit = new OctokitWithPlugins({ auth: `token ${ghToken}` });
     }
     listRunArtifacts(owner, repo) {
+        var e_1, _a;
         return __awaiter(this, void 0, void 0, function* () {
-            const listWorkflowRunArtifactsResponse = yield this.octokit.actions.listArtifactsForRepo({
-                owner,
-                repo,
-            });
-            return listWorkflowRunArtifactsResponse.data.artifacts;
+            const artifacts = [];
+            try {
+                for (var _b = __asyncValues(this.octokit.paginate.iterator(this.octokit.actions.listArtifactsForRepo, { owner, repo })), _c; _c = yield _b.next(), !_c.done;) {
+                    const response = _c.value;
+                    if (response.data.total_count > 0) {
+                        artifacts.push(...response.data.artifacts);
+                    }
+                }
+            }
+            catch (e_1_1) { e_1 = { error: e_1_1 }; }
+            finally {
+                try {
+                    if (_c && !_c.done && (_a = _b.return)) yield _a.call(_b);
+                }
+                finally { if (e_1) throw e_1.error; }
+            }
+            return artifacts;
         });
     }
     delteArtifact(owner, repo, artifact) {

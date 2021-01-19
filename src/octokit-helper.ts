@@ -1,5 +1,6 @@
 import { Octokit as O } from "@octokit/core";
-import { Octokit } from "@octokit/rest";
+import { paginateRest } from "@octokit/plugin-paginate-rest";
+import { restEndpointMethods } from "@octokit/plugin-rest-endpoint-methods";
 import { Inject } from "typedi";
 import { Artifact } from "./helpers";
 import { Logger } from "./logger-base";
@@ -10,22 +11,27 @@ export class OctokitHelper {
   private readonly logger: Logger;
   private readonly octokit: O;
   constructor() {
+    const OctokitWithPlugins = O.plugin(paginateRest, restEndpointMethods);
     const ghToken = core.getInput("token");
     if (ghToken === undefined) {
       this.logger.error("GITGUB_TOKEN env variable was not set.");
       process.exit(1);
     }
-    this.octokit = new Octokit({ auth: `token ${ghToken}` });
+    this.octokit = new OctokitWithPlugins({ auth: `token ${ghToken}` });
   }
 
   async listRunArtifacts(owner: string, repo: string): Promise<Artifact[]> {
-    const listWorkflowRunArtifactsResponse = await this.octokit.actions.listArtifactsForRepo(
-      {
-        owner,
-        repo,
+    const artifacts = [];
+    for await (const response of this.octokit.paginate.iterator(
+      this.octokit.actions.listArtifactsForRepo,
+      { owner, repo }
+    )) {
+      if (response.data.total_count > 0) {
+        artifacts.push(...response.data.artifacts);
       }
-    );
-    return listWorkflowRunArtifactsResponse.data.artifacts;
+    }
+
+    return artifacts;
   }
 
   async delteArtifact(
