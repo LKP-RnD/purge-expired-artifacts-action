@@ -23623,7 +23623,6 @@ class Main {
                 });
                 this.logger.info(`Artifacts to purge: ${expiredArtifacts.length}`);
                 const deleteRequests = expiredArtifacts.map((artifact) => {
-                    this.logger.info(`Purging artifact: ${artifact.name}`, artifact.id);
                     return this.oh.delteArtifact(owner, repo, artifact);
                 });
                 yield Promise.all(deleteRequests).catch(core.setFailed);
@@ -23715,11 +23714,13 @@ class OctokitHelper {
     }
     delteArtifact(owner, repo, artifact) {
         return __awaiter(this, void 0, void 0, function* () {
+            const formattedArtifact = JSON.stringify(artifact);
             try {
                 if (this.dryRun) {
-                    this.logger.info(`[Dry run]: Would have deleted artifact: ${artifact.id} ${artifact.expires_at} ${artifact.name}`);
+                    this.logger.info(`Would have deleted artifact ${formattedArtifact}, but is running in dry run mode.`);
                 }
                 else {
+                    this.logger.info(`Purging artifact: ${artifact.name}`, artifact.id);
                     const deleteArtifactResponse = yield this.octokit.actions.deleteArtifact({
                         owner,
                         repo,
@@ -23729,8 +23730,7 @@ class OctokitHelper {
                 }
             }
             catch (error) {
-                this.logger.error(error.message);
-                this.logger.error(`Could not delete artifact with id ${artifact.id}`);
+                this.logger.error(`Could not delete artifact ${formattedArtifact}, failed with message: '${error.message}'`);
             }
         });
     }

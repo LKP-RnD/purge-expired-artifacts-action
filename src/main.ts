@@ -23,7 +23,6 @@ export class Main {
       });
       this.logger.info(`Artifacts to purge: ${expiredArtifacts.length}`);
       const deleteRequests = expiredArtifacts.map((artifact: Artifact) => {
-        this.logger.info(`Purging artifact: ${artifact.name}`, artifact.id);
         return this.oh.delteArtifact(owner, repo, artifact);
       });
       await Promise.all(deleteRequests).catch(core.setFailed);

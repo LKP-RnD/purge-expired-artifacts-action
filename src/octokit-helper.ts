@@ -42,12 +42,14 @@ export class OctokitHelper {
     repo: string,
     artifact: Artifact
   ): Promise<void> {
+    const formattedArtifact = JSON.stringify(artifact);
     try {
       if (this.dryRun) {
         this.logger.info(
-          `[Dry run]: Would have deleted artifact: ${artifact.id} ${artifact.expires_at} ${artifact.name}`
+          `Would have deleted artifact ${formattedArtifact}, but is running in dry run mode.`
         );
       } else {
+        this.logger.info(`Purging artifact: ${artifact.name}`, artifact.id);
         const deleteArtifactResponse = await this.octokit.actions.deleteArtifact(
           {
             owner,
@@ -58,8 +60,9 @@ export class OctokitHelper {
         this.logger.debug(`status: ${deleteArtifactResponse.status}`);
       }
     } catch (error) {
-      this.logger.error(error.message);
-      this.logger.error(`Could not delete artifact with id ${artifact.id}`);
+      this.logger.error(
+        `Could not delete artifact ${formattedArtifact}, failed with message: '${error.message}'`
+      );
     }
   }
 }
