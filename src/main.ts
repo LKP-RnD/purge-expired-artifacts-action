@@ -28,7 +28,9 @@ export class Main {
       });
       await Promise.all(deleteRequests).catch(core.setFailed);
       artifacts = await this.oh.listRunArtifacts(owner, repo);
-      this.logger.info(`Artifacts after deletion: ${artifacts.length}`);
+      this.logger.info(
+        `Artifacts remaining after deletion: ${artifacts.length}`
+      );
     } catch (err) {
       this.logger.error(err.message);
       core.setFailed(err.message);
