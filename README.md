@@ -9,7 +9,8 @@ keep your github storage clean of expired run artifacts. To make sure your artif
 an artifact upload action that supports expire time or set a default expire time for your repository.
 
 # How to use
-Example
+### Example (Dry-run)
+Will log the expired artifcts instead of deleting
 
 ```
 name: 'Purge expired artifacts'
@@ -25,6 +26,25 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           repo_to_purge: "your-github-user-or-org/your-repo"
 ```
+
+Example (Actual-run)
+Will delete all expired artifacts.
+```
+name: 'Purge expired artifacts'
+on:
+  schedule:
+    - cron: '0 * * * *'
+jobs:
+  purge-artifacts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: LKP-RnD/purge-expired-artifacts-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repo_to_purge: "your-github-user-or-org/your-repo"
+          dry_run: "false"
+```
+
 
 ## Inputs
 

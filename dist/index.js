@@ -23684,7 +23684,7 @@ class OctokitHelper {
     constructor() {
         const OctokitWithPlugins = core_1.Octokit.plugin(plugin_paginate_rest_1.paginateRest, plugin_rest_endpoint_methods_1.restEndpointMethods);
         const ghToken = core.getInput("token");
-        this.dryRun = core.getInput("dry_run") === "true";
+        this.dryRun = core.getInput("dry_run") !== "false";
         if (ghToken === undefined) {
             this.logger.error("GITGUB_TOKEN env variable was not set.");
             process.exit(1);
