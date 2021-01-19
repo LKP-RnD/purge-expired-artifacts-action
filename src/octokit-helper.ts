@@ -58,6 +58,7 @@ export class OctokitHelper {
         this.logger.debug(`status: ${deleteArtifactResponse.status}`);
       }
     } catch (error) {
+      this.logger.error(error.message);
       this.logger.error(`Could not delete artifact with id ${artifact.id}`);
     }
   }
