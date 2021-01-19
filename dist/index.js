@@ -23698,6 +23698,8 @@ class OctokitHelper {
                 for (var _b = __asyncValues(this.octokit.paginate.iterator(this.octokit.actions.listArtifactsForRepo, { owner, repo })), _c; _c = yield _b.next(), !_c.done;) {
                     const response = _c.value;
                     if (response.data.total_count > 0) {
+                        // eslint-disable-next-line no-console
+                        console.log(response);
                         artifacts.push(...response.data.artifacts);
                     }
                 }

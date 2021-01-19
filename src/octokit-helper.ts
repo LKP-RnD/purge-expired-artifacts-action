@@ -27,6 +27,8 @@ export class OctokitHelper {
       { owner, repo }
     )) {
       if (response.data.total_count > 0) {
+        // eslint-disable-next-line no-console
+        console.log(response);
         artifacts.push(...response.data.artifacts);
       }
     }
