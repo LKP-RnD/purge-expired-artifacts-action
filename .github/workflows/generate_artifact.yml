@@ -7,7 +7,7 @@ on:
       - src/**
       - .github/workflows/build.yml
 jobs:
-  generatee:
+  generate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
